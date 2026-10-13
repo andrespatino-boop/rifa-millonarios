@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -182,11 +181,11 @@
                     <p class="text-sm text-gray-500 mb-1">Total a pagar</p>
                     <p id="modal-total" class="text-3xl font-bold text-green-600 mb-2">$0</p>
                     <p class="text-sm text-gray-700">Por los números: <span id="modal-numbers" class="font-mono font-bold text-mfc-blue"></span></p>
-                </div>
+            </div>
 
-                <form id="registration-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo *</label>
+            <form id="registration-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo *</label>
                         <input type="text" id="user-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                     </div>
                     <div>
@@ -199,13 +198,15 @@
                     </div>
                     
                     <div class="pt-6 mt-4 border-t border-gray-200">
-                        <button type="submit" id="btn-submit-order" class="w-full mfc-blue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors text-lg flex justify-center items-center">
-                            Confirmar y Continuar al Pago
-                        </button>
-                        <p class="text-xs text-gray-500 text-center mt-3">Tus datos se guardarán en la base de datos oficial del sorteo de forma segura.</p>
-                    </div>
-                </form>
-            </div>
+                    <button type="submit" id="btn-submit-order" class="w-full mfc-blue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors text-lg flex justify-center items-center">
+                        Confirmar y Continuar al Pago
+                    </button>
+                    <button type="button" id="btn-admin-approve" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors text-lg flex justify-center items-center mt-2 hidden">
+                        <i class="fas fa-check-double mr-2"></i> Aprobar Inmediatamente (Admin)
+                    </button>
+                    <p class="text-xs text-gray-500 text-center mt-3">Tus números se reservarán por 15 minutos mientras completas el pago.</p>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -224,8 +225,8 @@
             </div>
 
             <div class="space-y-3 mb-6">
-                <!-- Enlace a Wompi -->
-                <a href="https://checkout.nequi.wompi.co/method?fbclid=PAT01DUAU6hBRleHRuA2FlbQIxMABwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp4xOFZQTRfJoG2wLFTCfSHzEdDL6gVLOG_tYgwlTYkmFoAkSPMN2zNHUUZDj_aem_Kyn17bsCRv_RnRlSk7TiZg" 
+                <!-- Enlace a Wompi actualizado -->
+                <a href="https://checkout.nequi.wompi.co/l/AQteZ4" 
                    target="_blank" 
                    class="block w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors flex items-center justify-center">
                     <i class="fas fa-credit-card mr-2"></i> 1. Pagar en Wompi / Nequi
@@ -243,10 +244,46 @@
          </div>
     </div>
 
+    <!-- Panel de Administración (Oculto por defecto) -->
+    <div id="admin-panel" class="fixed inset-0 modal-bg z-[60] hidden flex flex-col items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="bg-red-800 text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold"><i class="fas fa-lock mr-2"></i> Panel de Administración</h3>
+                <button id="btn-close-admin" class="text-white hover:text-gray-300"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <p class="text-sm text-gray-600 mb-4">Gestiona las reservas. Los números "Reservados" expirarán automáticamente en 15 minutos para los usuarios normales, pero tú puedes verlos aquí y aprobarlos si te pagan en efectivo o por fuera del sistema.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700">
+                                <th class="p-3 border-b">Núm</th>
+                                <th class="p-3 border-b">Nombre</th>
+                                <th class="p-3 border-b">Celular</th>
+                                <th class="p-3 border-b text-center">Estado</th>
+                                <th class="p-3 border-b text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <!-- Llenado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer para Admin -->
+    <footer class="text-center py-6 mt-8">
+        <button id="btn-admin-login" class="text-gray-400 hover:text-gray-600 text-xs transition-colors">
+            <i class="fas fa-shield-alt"></i> Panel
+        </button>
+    </footer>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = 'millonarios-rifa-prod';
         const firebaseConfig = {
@@ -263,6 +300,11 @@
         let selectedNumbers = [];
         const MAX_SELECTION = 3;
         let takenNumbers = []; 
+        let allReservations = {}; // Guardará todos los datos para el Admin
+
+        let isAdmin = false;
+        const ADMIN_PIN = "1946";
+        let isDirectAdminApproval = false;
 
         const gridContainer = document.getElementById('numbers-grid');
         const loadingIndicator = document.getElementById('loading-numbers');
@@ -282,6 +324,12 @@
         const btnCloseSuccess = document.getElementById('btn-close-success');
         const successNumbers = document.getElementById('success-numbers');
         const btnWaNotify = document.getElementById('btn-wa-notify');
+
+        const btnAdminApprove = document.getElementById('btn-admin-approve');
+        const btnAdminLogin = document.getElementById('btn-admin-login');
+        const adminPanel = document.getElementById('admin-panel');
+        const btnCloseAdmin = document.getElementById('btn-close-admin');
+        const adminTableBody = document.getElementById('admin-table-body');
 
         const ADMIN_PHONE = "573212521659"; 
 
@@ -309,22 +357,52 @@
             
             onSnapshot(numbersCollectionRef, (snapshot) => {
                 takenNumbers = [];
+                allReservations = {};
+                const now = Date.now();
+
                 snapshot.forEach((doc) => {
                     const data = doc.data();
-                    if (data.status === 'paid' || data.status === 'reserved') {
-                       takenNumbers.push(doc.id); 
+                    allReservations[doc.id] = data;
+
+                    // Lógica de expiración (15 minutos = 900,000 milisegundos)
+                    const timestamp = data.timestamp || now;
+                    const isExpired = (now - timestamp) > 900000;
+
+                    if (data.status === 'paid') {
+                        takenNumbers.push(doc.id); 
+                    } else if (data.status === 'reserved') {
+                        if (!isExpired) {
+                            takenNumbers.push(doc.id);
+                        }
                     }
                 });
                 
                 updateGridVisuals();
+                if (isAdmin) renderAdminTable();
+                
                 loadingIndicator.classList.add('hidden');
                 gridContainer.classList.remove('hidden');
             }, (error) => {
                 console.error("Error fetching taken numbers:", error);
-                loadingIndicator.classList.add('hidden');
-                gridContainer.classList.remove('hidden');
             });
         }
+
+        // Tarea en segundo plano: verifica cada minuto si hay reservas vencidas y libera la cuadrícula
+        setInterval(() => {
+            if(Object.keys(allReservations).length > 0) {
+                takenNumbers = [];
+                const now = Date.now();
+                Object.keys(allReservations).forEach(num => {
+                    const data = allReservations[num];
+                    const isExpired = (now - (data.timestamp || now)) > 900000;
+                    if (data.status === 'paid' || (data.status === 'reserved' && !isExpired)) {
+                        takenNumbers.push(num);
+                    }
+                });
+                updateGridVisuals();
+                if(isAdmin) renderAdminTable();
+            }
+        }, 60000);
 
         function renderGrid() {
             gridContainer.innerHTML = '';
@@ -397,7 +475,6 @@
                 selectedDisplay.innerHTML = '';
                 selectedNumbers.forEach(num => {
                     const span = document.createElement('span');
-                    // Corrección visual solicitada: fondo azul, texto blanco
                     span.className = 'bg-blue-900 text-white px-3 py-1.5 rounded-md shadow border border-blue-950 font-bold';
                     span.textContent = num;
                     selectedDisplay.appendChild(span);
@@ -414,7 +491,7 @@
 
         function showToast(message) {
             const toast = document.createElement('div');
-            toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl z-[60] transition-opacity duration-300 text-center font-medium';
+            toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl z-[70] transition-opacity duration-300 text-center font-medium';
             toast.textContent = message;
             document.body.appendChild(toast);
             
@@ -423,6 +500,84 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
+
+        // --- FUNCIONES DE ADMINISTRADOR ---
+        btnAdminLogin.addEventListener('click', () => {
+            if (isAdmin) {
+                adminPanel.classList.remove('hidden');
+                return;
+            }
+            const pin = prompt("Ingresa el PIN de Administrador:");
+            if (pin === ADMIN_PIN) {
+                isAdmin = true;
+                btnAdminApprove.classList.remove('hidden');
+                adminPanel.classList.remove('hidden');
+                renderAdminTable();
+                showToast("Modo Administrador Activado");
+            } else if (pin) {
+                showToast("PIN Incorrecto");
+            }
+        });
+
+        btnCloseAdmin.addEventListener('click', () => {
+            adminPanel.classList.add('hidden');
+        });
+
+        window.approveNumber = async (num) => {
+            if(!confirm(`¿Confirmas el pago del número ${num}? Quedará ocupado permanentemente.`)) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'taken_numbers', num);
+                await setDoc(docRef, { status: 'paid' }, { merge: true });
+                showToast(`Número ${num} marcado como pagado.`);
+            } catch(e) { console.error(e); showToast("Error al aprobar."); }
+        };
+
+        window.releaseNumber = async (num) => {
+            if(!confirm(`¿Deseas eliminar y liberar el número ${num}? Quedará disponible para venta.`)) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'taken_numbers', num);
+                await deleteDoc(docRef);
+                showToast(`Número ${num} liberado exitosamente.`);
+            } catch(e) { console.error(e); showToast("Error al liberar."); }
+        };
+
+        function renderAdminTable() {
+            adminTableBody.innerHTML = '';
+            const now = Date.now();
+            
+            const sortedNumbers = Object.keys(allReservations).sort((a,b) => parseInt(a) - parseInt(b));
+
+            sortedNumbers.forEach(num => {
+                const data = allReservations[num];
+                const age = now - (data.timestamp || now);
+                const isExpired = data.status === 'reserved' && (age > 900000);
+                
+                let statusBadge = '';
+                if (data.status === 'paid') {
+                    statusBadge = '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">Pagado</span>';
+                } else if (isExpired) {
+                    statusBadge = '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">Expirado (Libre)</span>';
+                } else {
+                    const minsLeft = Math.ceil((900000 - age) / 60000);
+                    statusBadge = `<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-bold">Pendiente (${minsLeft}m)</span>`;
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = "border-b hover:bg-gray-50 text-sm";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-center">${num}</td>
+                    <td class="p-3">${data.name || 'N/A'}</td>
+                    <td class="p-3">${data.phone || 'N/A'}</td>
+                    <td class="p-3 text-center">${statusBadge}</td>
+                    <td class="p-3 text-center whitespace-nowrap">
+                        ${data.status !== 'paid' ? `<button onclick="window.approveNumber('${num}')" class="text-green-600 hover:text-green-800 mr-4 p-1" title="Aprobar Pago"><i class="fas fa-check-circle text-lg"></i></button>` : ''}
+                        <button onclick="window.releaseNumber('${num}')" class="text-red-500 hover:text-red-700 p-1" title="Borrar y Liberar"><i class="fas fa-trash-alt text-lg"></i></button>
+                    </td>
+                `;
+                adminTableBody.appendChild(tr);
+            });
+        }
+        // ------------------------------------
 
         btnContinue.addEventListener('click', () => {
             checkoutModal.classList.remove('hidden');
@@ -439,12 +594,23 @@
             updateState();
         });
 
+        // Intercepción del botón de administrador dentro del formulario
+        btnAdminApprove.addEventListener('click', () => {
+            isDirectAdminApproval = true;
+            if(registrationForm.reportValidity()) {
+                registrationForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }
+        });
+
         registrationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!userId) {
                 showToast("Error de conexión. Intenta recargar la página.");
                 return;
             }
+
+            const isPaidStatus = isDirectAdminApproval; 
+            isDirectAdminApproval = false; // Resetear para la próxima vez
 
             const btnSubmit = document.getElementById('btn-submit-order');
             const originalText = btnSubmit.innerHTML;
@@ -457,37 +623,37 @@
             const total = calculatePrice(selectedNumbers.length);
 
             try {
-                const reservationId = `RES-${Date.now()}`;
-                const reservationRef = doc(db, 'artifacts', appId, 'users', userId, 'reservations', reservationId);
-                
-                const reservationData = {
-                    name, phone, address,
-                    numbers: selectedNumbers,
-                    totalAmount: total,
-                    status: 'pending_payment',
-                    createdAt: serverTimestamp()
-                };
-                await setDoc(reservationRef, reservationData);
-
+                // Guardamos en la lista pública visible (con datos para el admin)
                 const publicNumbersRef = collection(db, 'artifacts', appId, 'public', 'data', 'taken_numbers');
                 const writePromises = selectedNumbers.map(num => {
                     return setDoc(doc(publicNumbersRef, num), {
                         number: num,
-                        status: 'reserved',
+                        status: isPaidStatus ? 'paid' : 'reserved',
                         reservedBy: userId,
-                        timestamp: serverTimestamp()
+                        name: name,
+                        phone: phone,
+                        timestamp: Date.now() // Timestamp del cliente para facilitar la expiración
                     });
                 });
                 await Promise.all(writePromises);
 
-                const numsJoined = selectedNumbers.join(', ');
-                const waMessage = `¡Hola! Acabo de hacer una reserva para la Gran Rifa de Millonarios Ⓜ️🏆\n\n*Nombre:* ${name}\n*Números seleccionados:* ${numsJoined}\n*Total a pagar:* ${formatCurrency(total)}\n\nAdjunto a este mensaje te enviaré el comprobante de pago de Wompi/Nequi.`;
-                const encodedMsg = encodeURIComponent(waMessage);
-                btnWaNotify.href = `https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`;
-
                 checkoutModal.classList.add('hidden');
-                successNumbers.textContent = numsJoined;
-                successModal.classList.remove('hidden');
+                
+                // Si el Admin aprueba directamente, saltamos la pantalla de éxito de Wompi
+                if (isPaidStatus) {
+                    showToast("Reserva de administrador guardada exitosamente.");
+                    registrationForm.reset();
+                    selectedNumbers = [];
+                    updateState();
+                } else {
+                    const numsJoined = selectedNumbers.join(', ');
+                    const waMessage = `¡Hola! Acabo de hacer una reserva para la Gran Rifa de Millonarios Ⓜ️🏆\n\n*Nombre:* ${name}\n*Números seleccionados:* ${numsJoined}\n*Total a pagar:* ${formatCurrency(total)}\n\nAdjunto a este mensaje te enviaré el comprobante de pago de Wompi/Nequi.`;
+                    const encodedMsg = encodeURIComponent(waMessage);
+                    btnWaNotify.href = `https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`;
+
+                    successNumbers.textContent = numsJoined;
+                    successModal.classList.remove('hidden');
+                }
 
             } catch (error) {
                 console.error("Error saving reservation:", error);
