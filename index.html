@@ -59,6 +59,14 @@
 
     <header class="mfc-blue text-white shadow-lg overflow-hidden relative">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+        
+        <!-- ADMIN NAVIGATION BAR -->
+        <div class="relative z-20 bg-black/30 backdrop-blur-sm border-b border-white/10 px-4 py-2 flex justify-end">
+            <button id="btn-admin-login" class="text-white/80 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
+                <i class="fas fa-user-shield"></i> Administración
+            </button>
+        </div>
+
         <div class="max-w-4xl mx-auto px-4 py-8 text-center flex flex-col md:flex-row items-center justify-center gap-6 relative z-10">
             <!-- Logo corregido con la nueva URL provista por el usuario -->
             <img src="https://i.postimg.cc/LYKJNdLY/Millonarios-Futbol-Club-logo.png" alt="Escudo Millonarios" class="h-28 md:h-36 drop-shadow-2xl hover:scale-105 transition-transform">
@@ -273,12 +281,7 @@
         </div>
     </div>
 
-    <!-- Footer para Admin -->
-    <footer class="text-center py-6 mt-8">
-        <button id="btn-admin-login" class="text-gray-400 hover:text-gray-600 text-xs transition-colors">
-            <i class="fas fa-shield-alt"></i> Panel
-        </button>
-    </footer>
+    <!-- El footer de admin se oculta porque ahora está en el menú superior -->
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -303,7 +306,7 @@
         let allReservations = {}; // Guardará todos los datos para el Admin
 
         let isAdmin = false;
-        const ADMIN_PIN = "1946";
+        const ADMIN_PIN = "6279";
         let isDirectAdminApproval = false;
 
         const gridContainer = document.getElementById('numbers-grid');
