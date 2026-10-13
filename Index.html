@@ -1,0 +1,505 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Rifa - Camiseta Millonarios FC Estrella 16</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .font-sporty {
+            font-family: 'Oswald', sans-serif;
+        }
+        .mfc-blue {
+            background-color: #00225D; 
+        }
+        .text-mfc-blue {
+            color: #00225D;
+        }
+        .mfc-blue-hover:hover {
+            background-color: #00163d;
+        }
+        .number-btn {
+            transition: all 0.2s ease;
+        }
+        .number-btn.selected {
+            background-color: #10b981; 
+            color: white;
+            border-color: #10b981;
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .number-btn.taken {
+            background-color: #ef4444; 
+            color: white;
+            border-color: #ef4444;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .number-btn.available {
+            background-color: white;
+            color: #00225D;
+            border-color: #00225D;
+        }
+        .number-btn.available:hover {
+            background-color: #e5e7eb;
+        }
+        .modal-bg {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="mfc-blue text-white shadow-lg overflow-hidden relative">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+        <div class="max-w-4xl mx-auto px-4 py-8 text-center flex flex-col md:flex-row items-center justify-center gap-6 relative z-10">
+            <!-- Logo corregido con la nueva URL provista por el usuario -->
+            <img src="https://i.postimg.cc/LYKJNdLY/Millonarios-Futbol-Club-logo.png" alt="Escudo Millonarios" class="h-28 md:h-36 drop-shadow-2xl hover:scale-105 transition-transform">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold mb-1 uppercase tracking-wider font-sporty italic text-white drop-shadow-md">
+                    Millonarios FC
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-sporty text-yellow-400 tracking-wide drop-shadow">
+                    <i class="fas fa-futbol mr-2"></i> Rifa Estrella 16 <i class="fas fa-star ml-1"></i>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-200 mt-2 font-light">Una joya de colección: Camiseta Original Enmarcada</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8 border-t-4 border-blue-800">
+            <div class="md:flex">
+                <div class="md:w-1/2 bg-gray-200 relative group">
+                    <!-- FOTO REAL DE LA CAMISETA ENMARCADA -->
+                    <img id="shirt-image" src="https://i.postimg.cc/9F0KNWmp/20260912-170523(1).jpg" alt="Camiseta Enmarcada Millonarios" class="w-full h-full object-cover aspect-square md:aspect-auto">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity">
+                        <p class="text-white font-bold text-lg"><i class="fas fa-camera mr-2"></i> Foto real del premio</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 p-6 lg:p-8 flex flex-col justify-center">
+                    <!-- Nuevo Hook más atractivo y detalles del marco -->
+                    <h2 class="text-3xl font-bold text-mfc-blue mb-2 font-sporty uppercase">¡Gánate el Santo Grial Embajador!</h2>
+                    <p class="text-gray-600 mb-5 font-medium">No es solo una camiseta, es la gloria de la Estrella 16 inmortalizada para tu colección.</p>
+                    <ul class="space-y-4 text-gray-700 text-lg">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i> <span><strong>Camiseta Original Adidas</strong> versión jugador impecable.</span></li>
+                        <li class="flex items-start"><i class="fas fa-pen-nib text-green-500 mt-1 mr-3 text-xl"></i> <span><strong>Firmada a mano</strong> por la mítica plantilla Campeona del Apertura 2023.</span></li>
+                        <li class="flex items-start"><i class="fas fa-image text-green-500 mt-1 mr-3 text-xl"></i> <span><strong>Enmarcado de Lujo:</strong> Gran formato de 100cm x 100cm en madera negra, lista para ser el centro de atención.</span></li>
+                        <li class="flex items-start"><i class="fas fa-calendar-alt text-blue-500 mt-1 mr-3 text-xl"></i> <span><strong>Sorteo:</strong> 20 de Noviembre 2026</span></li>
+                        <li class="flex items-start"><i class="fas fa-ticket-alt text-blue-500 mt-1 mr-3 text-xl"></i> <span><strong>Juega con:</strong> 2 últimas cifras Lotería de Medellín</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-8 border-t-4 border-blue-800">
+            <h3 class="font-bold text-2xl text-center mb-6 text-mfc-blue font-sporty uppercase">Precios Especiales</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="flex flex-col items-center bg-blue-50 p-6 rounded-xl border border-blue-100 hover:shadow-lg transition">
+                    <span class="text-xl font-semibold mb-2 text-gray-700">1 Número</span>
+                    <span class="text-3xl font-bold text-green-600 font-sporty tracking-wide">$50.000</span>
+                </div>
+                <div class="flex flex-col items-center bg-white p-6 rounded-xl border-2 border-yellow-400 shadow-md relative transform md:-translate-y-2">
+                    <div class="absolute -top-4 bg-yellow-400 text-yellow-900 px-4 py-1 rounded-full text-sm font-bold shadow-sm uppercase tracking-wider">Promoción</div>
+                    <span class="text-xl font-semibold mb-2 mt-2 text-gray-700">2 Números</span>
+                    <span class="text-3xl font-bold text-green-600 font-sporty tracking-wide">$80.000</span>
+                </div>
+                <div class="flex flex-col items-center bg-mfc-blue text-white p-6 rounded-xl border-2 border-yellow-400 shadow-lg relative transform md:-translate-y-4">
+                    <div class="absolute -top-4 bg-yellow-400 text-yellow-900 px-4 py-1 rounded-full text-sm font-bold shadow-sm uppercase tracking-wider">Mejor Precio</div>
+                    <span class="text-xl font-semibold mb-2 mt-2 text-gray-200">3 Números</span>
+                    <span class="text-3xl font-bold text-yellow-400 font-sporty tracking-wide">$100.000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-8">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-mfc-blue">Elige tus números</h2>
+                    <p class="text-sm text-gray-500 mt-1">Selecciona hasta 3 números (00 al 99)</p>
+                </div>
+                <div class="text-right">
+                    <span id="selected-count" class="text-2xl font-bold text-mfc-blue">0</span>
+                    <span class="text-gray-500">/3</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 mb-6 text-sm justify-center">
+                <div class="flex items-center"><span class="w-4 h-4 rounded-full bg-white border border-blue-800 mr-2"></span> Disponible</div>
+                <div class="flex items-center"><span class="w-4 h-4 rounded-full bg-emerald-500 mr-2"></span> Tu Selección</div>
+                <div class="flex items-center"><span class="w-4 h-4 rounded-full bg-red-500 opacity-50 mr-2"></span> Ocupado</div>
+            </div>
+
+            <div id="loading-numbers" class="text-center py-10">
+                <i class="fas fa-circle-notch fa-spin text-4xl text-mfc-blue mb-3"></i>
+                <p class="text-gray-600">Conectando a la base de datos...</p>
+            </div>
+
+            <div id="numbers-grid" class="grid grid-cols-5 sm:grid-cols-10 gap-2 md:gap-3 hidden">
+                <!-- Numbers generated by JS -->
+            </div>
+            
+            <div id="summary-bar" class="mt-8 bg-gray-50 p-4 rounded-xl border border-gray-200 hidden transition-all duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Números seleccionados:</p>
+                        <!-- Removido el text-mfc-blue para evitar conflictos, colores se asignan en JS -->
+                        <div id="selected-numbers-display" class="flex flex-wrap gap-2 font-mono text-lg font-bold"></div>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <p class="text-sm text-gray-600 mb-1">Total a pagar:</p>
+                        <p id="total-price" class="text-3xl font-bold text-green-600">$0</p>
+                    </div>
+                    <button id="btn-continue" class="w-full md:w-auto mfc-blue text-white px-8 py-3 rounded-lg font-bold shadow-md mfc-blue-hover disabled:opacity-50 disabled:cursor-not-allowed">
+                        Reservar Números <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Datos de Reserva -->
+    <div id="checkout-modal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div class="mfc-blue text-white px-6 py-4 rounded-t-2xl flex justify-between items-center">
+                <h3 class="text-xl font-bold">Completa tu Reserva</h3>
+                <button id="btn-close-modal" class="text-white hover:text-gray-200 focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="bg-gray-50 rounded-lg p-4 mb-6 text-center border">
+                    <p class="text-sm text-gray-500 mb-1">Total a pagar</p>
+                    <p id="modal-total" class="text-3xl font-bold text-green-600 mb-2">$0</p>
+                    <p class="text-sm text-gray-700">Por los números: <span id="modal-numbers" class="font-mono font-bold text-mfc-blue"></span></p>
+                </div>
+
+                <form id="registration-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo *</label>
+                        <input type="text" id="user-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Celular (WhatsApp) *</label>
+                        <input type="tel" id="user-phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="300 000 0000">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad / Dirección *</label>
+                        <input type="text" id="user-address" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+                    
+                    <div class="pt-6 mt-4 border-t border-gray-200">
+                        <button type="submit" id="btn-submit-order" class="w-full mfc-blue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors text-lg flex justify-center items-center">
+                            Confirmar y Continuar al Pago
+                        </button>
+                        <p class="text-xs text-gray-500 text-center mt-3">Tus datos se guardarán en la base de datos oficial del sorteo de forma segura.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Éxito / Acciones Finales -->
+    <div id="success-modal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm text-center p-8">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-3xl text-green-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">¡Reserva Guardada!</h3>
+            <p class="text-gray-600 mb-4">Tus números han sido reservados en la base de datos. Para hacerlos oficiales, completa el pago.</p>
+            
+            <div class="bg-gray-50 p-3 rounded-lg mb-6 border border-gray-200">
+                <p class="text-sm text-gray-500">Números reservados:</p>
+                <p id="success-numbers" class="font-bold text-xl text-mfc-blue font-mono"></p>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <!-- Enlace a Wompi -->
+                <a href="https://checkout.nequi.wompi.co/method?fbclid=PAT01DUAU6hBRleHRuA2FlbQIxMABwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp4xOFZQTRfJoG2wLFTCfSHzEdDL6gVLOG_tYgwlTYkmFoAkSPMN2zNHUUZDj_aem_Kyn17bsCRv_RnRlSk7TiZg" 
+                   target="_blank" 
+                   class="block w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors flex items-center justify-center">
+                    <i class="fas fa-credit-card mr-2"></i> 1. Pagar en Wompi / Nequi
+                </a>
+                
+                <!-- Enlace a WhatsApp dinámico -->
+                <a href="#" id="btn-wa-notify" target="_blank" class="block w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors flex items-center justify-center">
+                    <i class="fab fa-whatsapp text-lg mr-2"></i> 2. Enviar Comprobante
+                </a>
+            </div>
+
+            <button id="btn-close-success" class="text-gray-500 underline text-sm hover:text-gray-800 transition-colors">
+                Cerrar y volver al inicio
+            </button>
+         </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = 'millonarios-rifa-prod';
+        const firebaseConfig = {
+          apiKey: "AIzaSyBLiiTddy16JOkewTtdwJv5RKHP6o8HjJM",
+          authDomain: "rifa-millos-16.firebaseapp.com",
+          projectId: "rifa-millos-16",
+          storageBucket: "rifa-millos-16.firebasestorage.app",
+          messagingSenderId: "938665767621",
+          appId: "1:938665767621:web:ef1f37ceaf75e447f976ac"
+        };
+
+        let app, db, auth, userId;
+        
+        let selectedNumbers = [];
+        const MAX_SELECTION = 3;
+        let takenNumbers = []; 
+
+        const gridContainer = document.getElementById('numbers-grid');
+        const loadingIndicator = document.getElementById('loading-numbers');
+        const countDisplay = document.getElementById('selected-count');
+        const summaryBar = document.getElementById('summary-bar');
+        const selectedDisplay = document.getElementById('selected-numbers-display');
+        const totalPriceDisplay = document.getElementById('total-price');
+        const btnContinue = document.getElementById('btn-continue');
+        
+        const checkoutModal = document.getElementById('checkout-modal');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const modalTotal = document.getElementById('modal-total');
+        const modalNumbers = document.getElementById('modal-numbers');
+        const registrationForm = document.getElementById('registration-form');
+        
+        const successModal = document.getElementById('success-modal');
+        const btnCloseSuccess = document.getElementById('btn-close-success');
+        const successNumbers = document.getElementById('success-numbers');
+        const btnWaNotify = document.getElementById('btn-wa-notify');
+
+        const ADMIN_PHONE = "573212521659"; 
+
+        async function initApp() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                const userCredential = await signInAnonymously(auth);
+                userId = userCredential.user.uid;
+                
+                renderGrid();
+                listenToTakenNumbers();
+            } catch (error) {
+                console.error("Error initializing app:", error);
+                renderGrid();
+                loadingIndicator.classList.add('hidden');
+                gridContainer.classList.remove('hidden');
+            }
+        }
+
+        function listenToTakenNumbers() {
+            const numbersCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'taken_numbers');
+            
+            onSnapshot(numbersCollectionRef, (snapshot) => {
+                takenNumbers = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.status === 'paid' || data.status === 'reserved') {
+                       takenNumbers.push(doc.id); 
+                    }
+                });
+                
+                updateGridVisuals();
+                loadingIndicator.classList.add('hidden');
+                gridContainer.classList.remove('hidden');
+            }, (error) => {
+                console.error("Error fetching taken numbers:", error);
+                loadingIndicator.classList.add('hidden');
+                gridContainer.classList.remove('hidden');
+            });
+        }
+
+        function renderGrid() {
+            gridContainer.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const numStr = i.toString().padStart(2, '0');
+                const btn = document.createElement('button');
+                btn.className = `number-btn available border-2 rounded-lg py-2 md:py-3 text-lg md:text-xl font-bold w-full`;
+                btn.textContent = numStr;
+                btn.id = `btn-${numStr}`;
+                btn.dataset.number = numStr;
+                btn.addEventListener('click', () => handleNumberClick(numStr));
+                gridContainer.appendChild(btn);
+            }
+        }
+
+        function updateGridVisuals() {
+            const buttons = document.querySelectorAll('.number-btn');
+            buttons.forEach(btn => {
+                const num = btn.dataset.number;
+                btn.classList.remove('selected', 'taken', 'available');
+                btn.disabled = false;
+
+                if (takenNumbers.includes(num)) {
+                    btn.classList.add('taken');
+                    btn.disabled = true;
+                } else if (selectedNumbers.includes(num)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.add('available');
+                }
+            });
+        }
+
+        function handleNumberClick(numStr) {
+            if (takenNumbers.includes(numStr)) return;
+
+            const index = selectedNumbers.indexOf(numStr);
+            if (index > -1) {
+                selectedNumbers.splice(index, 1);
+            } else {
+                if (selectedNumbers.length >= MAX_SELECTION) {
+                    showToast("Solo puedes seleccionar máximo 3 números por transacción.");
+                    return;
+                }
+                selectedNumbers.push(numStr);
+            }
+            updateState();
+        }
+
+        function calculatePrice(count) {
+            if (count === 1) return 50000;
+            if (count === 2) return 80000;
+            if (count === 3) return 100000;
+            return 0;
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function updateState() {
+            updateGridVisuals();
+            const count = selectedNumbers.length;
+            countDisplay.textContent = count;
+            
+            if (count > 0) {
+                summaryBar.classList.remove('hidden');
+                selectedDisplay.innerHTML = '';
+                selectedNumbers.forEach(num => {
+                    const span = document.createElement('span');
+                    // Corrección visual solicitada: fondo azul, texto blanco
+                    span.className = 'bg-blue-900 text-white px-3 py-1.5 rounded-md shadow border border-blue-950 font-bold';
+                    span.textContent = num;
+                    selectedDisplay.appendChild(span);
+                });
+                
+                const total = calculatePrice(count);
+                totalPriceDisplay.textContent = formatCurrency(total);
+                modalTotal.textContent = formatCurrency(total);
+                modalNumbers.textContent = selectedNumbers.join(', ');
+            } else {
+                summaryBar.classList.add('hidden');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl z-[60] transition-opacity duration-300 text-center font-medium';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        btnContinue.addEventListener('click', () => {
+            checkoutModal.classList.remove('hidden');
+        });
+
+        btnCloseModal.addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+        });
+
+        btnCloseSuccess.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+            registrationForm.reset();
+            selectedNumbers = [];
+            updateState();
+        });
+
+        registrationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                showToast("Error de conexión. Intenta recargar la página.");
+                return;
+            }
+
+            const btnSubmit = document.getElementById('btn-submit-order');
+            const originalText = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Guardando...';
+            btnSubmit.disabled = true;
+
+            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('user-phone').value;
+            const address = document.getElementById('user-address').value;
+            const total = calculatePrice(selectedNumbers.length);
+
+            try {
+                const reservationId = `RES-${Date.now()}`;
+                const reservationRef = doc(db, 'artifacts', appId, 'users', userId, 'reservations', reservationId);
+                
+                const reservationData = {
+                    name, phone, address,
+                    numbers: selectedNumbers,
+                    totalAmount: total,
+                    status: 'pending_payment',
+                    createdAt: serverTimestamp()
+                };
+                await setDoc(reservationRef, reservationData);
+
+                const publicNumbersRef = collection(db, 'artifacts', appId, 'public', 'data', 'taken_numbers');
+                const writePromises = selectedNumbers.map(num => {
+                    return setDoc(doc(publicNumbersRef, num), {
+                        number: num,
+                        status: 'reserved',
+                        reservedBy: userId,
+                        timestamp: serverTimestamp()
+                    });
+                });
+                await Promise.all(writePromises);
+
+                const numsJoined = selectedNumbers.join(', ');
+                const waMessage = `¡Hola! Acabo de hacer una reserva para la Gran Rifa de Millonarios Ⓜ️🏆\n\n*Nombre:* ${name}\n*Números seleccionados:* ${numsJoined}\n*Total a pagar:* ${formatCurrency(total)}\n\nAdjunto a este mensaje te enviaré el comprobante de pago de Wompi/Nequi.`;
+                const encodedMsg = encodeURIComponent(waMessage);
+                btnWaNotify.href = `https://wa.me/${ADMIN_PHONE}?text=${encodedMsg}`;
+
+                checkoutModal.classList.add('hidden');
+                successNumbers.textContent = numsJoined;
+                successModal.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Error saving reservation:", error);
+                showToast("Hubo un error al guardar tu reserva. Por favor intenta de nuevo.");
+            } finally {
+                btnSubmit.innerHTML = originalText;
+                btnSubmit.disabled = false;
+            }
+        });
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
+```
